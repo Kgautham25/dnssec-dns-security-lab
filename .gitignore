@@ -1,0 +1,44 @@
+# Secrets - never commit
+*.pem
+*.ppk
+*.key
+*.private
+*.csr
+*.crt
+kubeconfig*
+config
+*.env
+.env
+application-local.properties
+ssourl.txt
+
+# Build output
+target/
+build/
+dist/
+*.class
+*.jar
+node_modules/
+.gradle/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+myenv/
+
+# IDE / OS
+.idea/
+.settings/
+.classpath
+.project
+.vscode/
+.DS_Store
+._*
+Thumbs.db
+
+# DNSSEC signing keys are generated at setup
+authoritative/keys/
+*.signed
+data/logs/
+*.pcap

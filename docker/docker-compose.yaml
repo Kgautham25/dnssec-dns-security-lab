@@ -1,0 +1,44 @@
+version: "3.8"
+
+networks:
+  dnslab:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/24
+
+services:
+
+  real_website:
+    build: ./real_website
+    networks:
+      dnslab:
+        ipv4_address: 10.5.0.10
+    ports:
+      - "8080:80"   # optional: map host port to real web (for direct access)
+
+  fake_website:
+    build: ./fake_website
+    networks:
+      dnslab:
+        ipv4_address: 10.5.0.99
+
+  dns_resolver:
+    build: ./dns_resolver
+    networks:
+      dnslab:
+        ipv4_address: 10.5.0.53
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "8053:53/udp"   # optional host mapping if you want to test from host via 127.0.0.1:5353
+
+  attacker:
+    build: ./attacker
+    networks:
+      dnslab:
+        ipv4_address: 10.5.0.50
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - dns_resolver
